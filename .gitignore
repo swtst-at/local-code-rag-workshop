@@ -1,0 +1,19 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Local vector index
+db/
+db_local/
+*.sqlite3
+
+# Chainlit
+.chainlit/
+.files/
+
+# Editors / OS
+.idea/
+.vscode/
+.DS_Store
