@@ -213,6 +213,56 @@ model. With the Ollama provider from Step 1, everything stays local. With a clou
 
 ---
 
+## 4.8 When the local model is not enough
+
+An 8B model on a laptop has limits: a context of about 32k tokens, a few tokens per second, and
+weaker planning over many files. Signs that you hit them:
+
+- the context indicator approaches `…/33k`, or goose starts to forget rules and tools
+- goose loops, stops calling tools, or gives up on a task that spans several files
+- a single answer takes minutes
+
+Then you can switch **this task** to a cloud model, e.g. Claude.
+
+> [!WARNING]
+> With a cloud model, **everything goose sees goes to that provider**: your prompts, the
+> `search_code` results, and every file the Developer extension reads.
+> The workshop’s demo projects are public — fine. For company code, check your policy first.
+
+| | Local (`qwen3:8b` via Ollama) | Cloud (e.g. Claude) |
+|---|---|---|
+| Code leaves the machine | no | **yes** |
+| Cost | none | per token, needs an API key |
+| Context | ~32k tokens | much larger, e.g. 200k |
+| Multi-file tasks, planning | limited | much stronger |
+| Speed on a laptop | slow first answer, ~14 tokens/s | depends on the network, usually faster |
+
+### goose desktop
+
+1. Once: **Settings → Configure providers → Anthropic**, enter your API key (stored in the keyring).
+2. Start a **new chat**. Switching inside a running chat would send the whole conversation so far —
+   every code snippet included — to the cloud.
+3. Pick the cloud model in the model selector below the input (it shows `qwen3:8b`).
+4. Raise the context limit for the cloud model: **Settings → App → configuration editor →
+   Goose Context Limit**, e.g. `200000` — check the model’s real context size. The value from Step 1
+   applies to every provider: left at `32768`, goose would compact a Claude session after ~26k tokens.
+5. **Afterwards switch back:** Ollama in the model selector, *Goose Context Limit* back to `32768`,
+   a new chat. `python3 scripts/check_setup.py` must show `provider: ollama` again.
+
+### goose CLI
+
+Environment variables override the config — for one session, nothing to switch back
+([environment variables](https://goose-docs.ai/docs/guides/environment-variables)):
+
+```bash
+GOOSE_PROVIDER=anthropic GOOSE_MODEL=<claude-model> GOOSE_CONTEXT_LIMIT=200000 goose session
+```
+
+`<claude-model>`: one of the models `goose configure` lists for Anthropic. The API key is set once
+with `goose configure` → Configure Providers → Anthropic. The next plain `goose session` is local again.
+
+---
+
 ## Test the server without goose
 
 The MCP Inspector (needs Node.js) lets you call the tools by hand:
@@ -231,3 +281,5 @@ npx @modelcontextprotocol/inspector .venv/bin/python mcp_server.py
 | Tool returns `Ollama not reachable` | Ollama stopped | `sudo systemctl start ollama` |
 | goose answers without calling the tool | small model skipped the tool | say *"Search the code index …"*, add `.goosehints` |
 | Extension missing in a running chat | extensions load at session start | start a new chat |
+| Cloud model compacts after a few thousand tokens | `GOOSE_CONTEXT_LIMIT` still at the Ollama value | raise it for the cloud session (4.8) |
+| Setup check fails with `provider: anthropic` | still switched to the cloud model | switch back to Ollama (4.8) |
