@@ -25,7 +25,7 @@ agent — powered by a local LLM via [Ollama](https://ollama.com).
 | 3 | [Ask questions](docs/03-query.md) — terminal & chat UI | ✅ |
 | 4 | [Connect it to goose](docs/04-connect-goose.md) — MCP extension, desktop & CLI | ✅ |
 | 5 | Test your RAG: golden questions & recall@k | 🚧 |
-| 6 | Exercises | 🚧 |
+| 6 | [Exercises](docs/06-exercises.md) — let goose write a test, chunking & embedding experiments | ✅ |
 
 ## Before the workshop
 
@@ -41,7 +41,13 @@ The models are several GB — **download them at home, not over conference Wi-Fi
    pip install -r requirements.txt
    ollama pull nomic-embed-text
    ```
-3. Run the setup check — everything should be green:
+3. For the main exercise (Step 6): **JDK 23 or newer** and **Maven** — the demo projects target Java 23.
+   Download the Maven dependencies at home too:
+   ```bash
+   cd ../generated_kotlin && mvn -q test-compile && cd -
+   ```
+   Chrome is only needed to run the tests for real; the exercise can be checked without a browser.
+4. Run the setup check — everything should be green:
    ```bash
    python3 scripts/check_setup.py
    ```
@@ -73,6 +79,7 @@ ask.py           question → answer with sources, in the terminal
 app.py           chat UI (chainlit run app.py)
 mcp_server.py    MCP server — goose starts it as an extension
 scripts/         setup check, goose extension settings
+exercises/       reference solutions for the exercises
 ```
 
 ## License

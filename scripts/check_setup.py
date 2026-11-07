@@ -158,6 +158,27 @@ def check_python():
         fail("chainlit not installed (chat UI, step 3)", "pip install -r requirements.txt")
 
 
+# ── Java toolchain (only needed for exercise 1) ───────────────────────────────
+def check_java():
+    section("Java & Maven (exercise 1)")
+    hint = "only needed for exercise 1 — the demo projects target Java 23"
+    try:
+        out = subprocess.run(["java", "-version"], capture_output=True, text=True, timeout=15)
+        text = out.stderr + out.stdout
+        m = re.search(r'version "(\d+)', text)
+        major = int(m.group(1)) if m else 0
+        if major >= 23:
+            ok(f"Java {major}")
+        else:
+            warn(f"Java {major or '?'} — JDK 23 or newer required", hint)
+    except (FileNotFoundError, subprocess.TimeoutExpired):
+        warn("java not found", hint)
+    if shutil.which("mvn"):
+        ok("Maven installed")
+    else:
+        warn("mvn not found", hint)
+
+
 def check_model_runtime():
     section(f"Model runtime ({MODEL})")
     print("  … loading the model, this can take a moment")
@@ -283,6 +304,7 @@ def main():
         ctx = check_model_runtime()
     check_goose_config(ctx)
     check_python()
+    check_java()
 
     print(f"\n{results['ok']} ok · {results['warn']} warnings · {results['fail']} failed")
     if results["fail"]:
