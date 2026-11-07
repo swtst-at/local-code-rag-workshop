@@ -8,7 +8,7 @@ Goal: turn a code repository into a local, searchable vector index.
 
 You will:
 
-1. Set up the Python environment
+1. Activate the Python environment
 2. Get the demo repository
 3. Look at how code is chunked
 4. Build the index — and update it incrementally
@@ -17,25 +17,11 @@ You will:
 
 ## 2.1 Python environment
 
-A **venv** (virtual environment) is a project-local Python installation in `.venv/`.
-Packages installed with `pip` go there instead of into the system Python — comparable to every
-Maven project having its own dependencies. `requirements.txt` plays the role of the `pom.xml`.
-Recent Ubuntu versions refuse `pip install` into the system Python, so a venv is the clean way.
-
-From the repository root:
+The venv and the embedding model were set up in Step 1 (sections 1.3 and 1.6).
+In every new terminal, activate the venv again from the workshop repository:
 
 ```bash
-python3 -m venv .venv
-source .venv/bin/activate          # every new terminal: activate again
-pip install -r requirements.txt
-```
-
-Ubuntu: if `venv` is missing → `sudo apt install python3-venv`.
-
-Pull the embedding model (~270 MB):
-
-```bash
-ollama pull nomic-embed-text
+source .venv/bin/activate          # the prompt shows (.venv)
 ```
 
 ---

@@ -6,8 +6,9 @@ You will:
 
 1. Install or update **goose** (CLI, optionally the desktop app)
 2. Install or update **Ollama** and tune it for agent use
-3. Pull a model that supports **tool calling**
+3. Pull the models — one with **tool calling**, one for embeddings
 4. Point goose at Ollama and verify it works
+5. Set up the **Python environment** and run the setup check
 
 Reference platform: Ubuntu. macOS notes are included where things differ.
 
@@ -134,13 +135,14 @@ Apple Silicon GPUs are used automatically.
 
 ---
 
-## 1.3 Pull a model with tool calling
+## 1.3 Pull the models
 
 goose relies on **tool calling**. A model without it can only chat — the agent cannot read files,
 run commands or use our RAG tool.
 
 ```bash
-ollama pull qwen3:8b      # ~5 GB, the workshop default
+ollama pull qwen3:8b            # ~5 GB, the workshop default
+ollama pull nomic-embed-text    # ~270 MB, turns code into vectors (Step 2)
 ```
 
 | Your machine | Model |
@@ -274,11 +276,33 @@ the first request pays for reading goose's ~6k-token system prompt, later ones r
 > **Expect the first answer to take about a minute** on an iGPU (54 s measured on the reference
 > machine), longer on CPU only. It is not hanging.
 
-Finally, run the setup check from the repository root:
+---
+
+## 1.6 Python environment and setup check
+
+The RAG scripts need a few Python packages. They go into a **venv** (virtual environment) — a
+project-local Python installation in `.venv/`, comparable to every Maven project having its own
+dependencies; `requirements.txt` plays the role of the `pom.xml`. Recent Ubuntu versions refuse
+`pip install` into the system Python, so a venv is the clean way.
+
+From the root of the workshop repository:
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate          # every new terminal: activate again — the prompt shows (.venv)
+pip install -r requirements.txt
+```
+
+Ubuntu: if `venv` is missing → `sudo apt install python3-venv`.
+
+Then run the setup check — with the venv active:
 
 ```bash
 python3 scripts/check_setup.py
 ```
+
+Everything should be green. Warnings are optional improvements; the Java and Maven checks only
+matter for the exercise in Step 6.
 
 ---
 
@@ -293,3 +317,5 @@ python3 scripts/check_setup.py
 | `ollama ps` shows `100% CPU` despite a GPU | iGPU disabled | `OLLAMA_IGPU_ENABLE=1` (1.2) |
 | `Failed to start extension` at session start | stale extension in the config | remove it (1.4) |
 | Very slow first answer | large system prompt, thinking | expected; second answer is faster |
+| `chromadb not found — is the venv active?` | venv not created or not activated | `source .venv/bin/activate` (1.6) |
+| `GOOSE_CONTEXT_LIMIT not set` after using the desktop app | the desktop setup rewrote the config | add the line again (1.4) |
