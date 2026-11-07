@@ -284,16 +284,23 @@ def check_goose_config(ollama_ctx):
     else:
         warn(f"model: {model or 'not set'} (workshop default: {MODEL})")
 
+    # Read by the goose CLI and the desktop app. An environment variable of the same name overrides it.
+    target = ollama_ctx if (ollama_ctx or 0) >= MIN_CONTEXT else 32768
     limit = read_top_level(text, "GOOSE_CONTEXT_LIMIT")
+    env_limit = os.environ.get("GOOSE_CONTEXT_LIMIT")
+    if env_limit:
+        info(f"environment variable GOOSE_CONTEXT_LIMIT={env_limit} overrides the config for goose "
+             "started from this terminal")
     if not limit:
-        warn("GOOSE_CONTEXT_LIMIT not set — goose assumes the model maximum and compacts too late",
-             f"echo 'GOOSE_CONTEXT_LIMIT: {ollama_ctx if (ollama_ctx or 0) >= MIN_CONTEXT else 32768}' "
-             f">> {GOOSE_CONFIG}")
+        warn(f"GOOSE_CONTEXT_LIMIT not set — goose assumes 128k, Ollama serves {target}; "
+             "long sessions lose their start silently",
+             f"printf '\\nGOOSE_CONTEXT_LIMIT: {target}\\n' >> {GOOSE_CONFIG}")
     elif ollama_ctx and limit.isdigit() and int(limit) > ollama_ctx:
         warn(f"GOOSE_CONTEXT_LIMIT {limit} is larger than Ollama's context {ollama_ctx}",
              "use the same value in both places")
     else:
-        ok(f"GOOSE_CONTEXT_LIMIT: {limit}")
+        ok(f"GOOSE_CONTEXT_LIMIT: {limit} (the chat shows …/{round(int(limit) / 1000)}k after the first message)"
+           if limit.isdigit() else f"GOOSE_CONTEXT_LIMIT: {limit}")
 
 
 def main():

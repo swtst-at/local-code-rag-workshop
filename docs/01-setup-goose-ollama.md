@@ -208,14 +208,32 @@ variable `GOOSE_LOCALE=en`.)
 
 ### Tell goose the real context size
 
-goose assumes the model's maximum context (e.g. 128k), but Ollama serves what you configured in 1.2.
-goose would then compact its history far too late while Ollama truncates silently. Align them:
+goose does not know how much context Ollama really serves. Without further information it assumes
+**128k tokens** and compacts the conversation at 80 % of that — around 100k tokens
+([smart context management](https://goose-docs.ai/docs/guides/sessions/smart-context-management)).
+Ollama only serves what you set in 1.2, e.g. 32k. Between the two, Ollama **silently cuts off the
+start of the conversation** — system prompt, tool descriptions, your first instructions. The model
+then forgets rules or tools, without any error message.
+
+Tell goose the real value — the same as `OLLAMA_CONTEXT_LENGTH`:
 
 ```bash
-echo 'GOOSE_CONTEXT_LIMIT: 32768' >> ~/.config/goose/config.yaml
+printf '\nGOOSE_CONTEXT_LIMIT: 32768\n' >> ~/.config/goose/config.yaml
 ```
 
-Use the same value as `OLLAMA_CONTEXT_LENGTH`. The goose status line should now show `…/32k`.
+(`printf` with a leading line break: if the file does not end with one, `echo` would glue the line
+to the last line and break the YAML.) CLI and desktop app both read it; the desktop app shows it under
+**Settings → App → configuration editor** as *Goose Context Limit*.
+
+Check it in a chat: the context indicator shows **`…/33k`** (32,768 rounded) — but only **after
+the first message**. An empty new chat shows the default `…/128k`.
+
+> [!NOTE]
+> Setting up a provider again in the desktop app can rewrite the config and drop this line.
+> Afterwards, check that it is still there (`grep GOOSE_CONTEXT_LIMIT ~/.config/goose/config.yaml`).
+>
+> The value applies to **every** provider — also to a cloud model you switch to. See Step 4,
+> “When the local model is not enough”.
 
 ### Verify that nothing goes to the cloud
 
@@ -318,4 +336,5 @@ matter for the exercise in Step 6.
 | `Failed to start extension` at session start | stale extension in the config | remove it (1.4) |
 | Very slow first answer | large system prompt, thinking | expected; second answer is faster |
 | `chromadb not found — is the venv active?` | venv not created or not activated | `source .venv/bin/activate` (1.6) |
-| `GOOSE_CONTEXT_LIMIT not set` after using the desktop app | the desktop setup rewrote the config | add the line again (1.4) |
+| Context indicator shows `…/128k` | empty chat (shows the default) or `GOOSE_CONTEXT_LIMIT` missing | send a message first; check the config (1.4) |
+| goose forgets rules or stops using tools in a long session | conversation longer than Ollama's context, the start is cut off | `GOOSE_CONTEXT_LIMIT` (1.4); start a new chat per task |
