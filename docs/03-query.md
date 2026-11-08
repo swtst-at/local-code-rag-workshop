@@ -86,7 +86,7 @@ your question. That's all the model knows about your code.
 | **Thinking** | better on multi-step questions, much slower | `--think` |
 | **Question wording** | embeddings match *meaning*, but the code's vocabulary still helps | "browser" vs "WebDriver" |
 | **Chunking** | decides what *can* be found (Step 2) | `CHUNKER=generic` index |
-| **Embedding model** | decides how well meaning is matched (Step 5) | `EMBED_MODEL=qwen3-embedding` |
+| **Embedding model** | decides how well meaning is matched (Step 5) | `EMBED_MODEL=qwen3-embedding:0.6b` |
 
 ### Good questions to try
 

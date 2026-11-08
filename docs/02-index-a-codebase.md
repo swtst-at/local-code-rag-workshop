@@ -188,12 +188,12 @@ automatically for the models we use:
 ### One collection per embedding model
 
 Vectors from different models are not comparable — different sizes, different "meaning".
-Each model gets its own collection (`code__nomic-embed-text`, `code__qwen3-embedding`, …).
+Each model gets its own collection (`code__nomic-embed-text`, `code__qwen3-embedding_0_6b`, …).
 That also lets you compare models later (Step 5):
 
 ```bash
-ollama pull qwen3-embedding
-EMBED_MODEL=qwen3-embedding python3 index.py ../generated_kotlin
+ollama pull qwen3-embedding:0.6b
+EMBED_MODEL=qwen3-embedding:0.6b python3 index.py ../generated_kotlin
 ```
 
 ### Batching

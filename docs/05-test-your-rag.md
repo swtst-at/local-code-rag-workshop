@@ -114,7 +114,7 @@ Not part of the workshop timeline. For when you want to tune the RAG for your ow
 
 | Change | Command | Note |
 |--------|---------|------|
-| Embedding model | `ollama pull qwen3-embedding` · `EMBED_MODEL=qwen3-embedding python3 index.py ../generated_kotlin` · `EMBED_MODEL=qwen3-embedding python3 eval_retrieval.py` | separate collection, the original stays |
+| Embedding model | `ollama pull qwen3-embedding:0.6b` · `EMBED_MODEL=qwen3-embedding:0.6b python3 index.py ../generated_kotlin` · `EMBED_MODEL=qwen3-embedding:0.6b python3 eval_retrieval.py` | separate collection, the original stays |
 | Generic chunker | `CHUNKER=generic python3 index.py ../generated_kotlin` · `CHUNKER=generic python3 eval_retrieval.py` | separate collection, the original stays |
 | Chunk size | `MAX_CHUNK_CHARS=500 python3 index.py ../generated_kotlin --force` · `python3 eval_retrieval.py` | **overwrites** the index — afterwards: `python3 index.py ../generated_kotlin --force` |
 

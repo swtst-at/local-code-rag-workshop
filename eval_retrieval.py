@@ -8,7 +8,7 @@ Retrieval eval — does the search find the right file? No LLM involved, fully d
 
 Compare setups by changing ONE thing and running again:
 
-    EMBED_MODEL=qwen3-embedding python3 eval_retrieval.py      # another embedding model
+    EMBED_MODEL=qwen3-embedding:0.6b python3 eval_retrieval.py      # another embedding model
     CHUNKER=generic python3 eval_retrieval.py                  # the generic chunker
 
 Metrics

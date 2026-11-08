@@ -1,7 +1,7 @@
 """
 Configuration — everything can be overridden with environment variables.
 
-    EMBED_MODEL=qwen3-embedding python3 index.py ../generated_kotlin
+    EMBED_MODEL=qwen3-embedding:0.6b python3 index.py ../generated_kotlin
 """
 
 import os

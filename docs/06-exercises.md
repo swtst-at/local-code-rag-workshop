@@ -1,13 +1,14 @@
 # Step 6 — Exercises
 
-Pick one. Exercise 1 is the main one; the others are short experiments for whoever finishes early.
+**In the workshop: Exercise 1.** Exercises 2–4 are optional take-home experiments for tuning the RAG
+to your own codebase — they change *how it works*, not how you use it.
 
 | # | Exercise | Time | Needs |
 |---|----------|------|-------|
-| 1 | [Let goose write a new test](#exercise-1--let-goose-write-a-new-test) | 20–25 min | JDK 23+, Maven (Chrome optional) |
+| 1 | [Let goose write a new test](#exercise-1--let-goose-write-a-new-test) — **workshop** | 20–25 min | JDK 23+, Maven (Chrome optional) |
 | 2 | [Chunk size](#exercise-2--chunk-size) | 10 min | — |
 | 3 | [Generic vs. structure-aware chunking](#exercise-3--generic-vs-structure-aware-chunking) | 10 min | — |
-| 4 | [Another embedding model](#exercise-4--another-embedding-model) | 10 min | `ollama pull qwen3-embedding` |
+| 4 | [Another embedding model](#exercise-4--another-embedding-model) | 10 min | `ollama pull qwen3-embedding:0.6b` (0.6 GB) |
 
 ---
 
@@ -156,6 +157,11 @@ If you indexed the changed project, re-index after the reset.
 
 ---
 
+## Take home: tune the RAG
+
+For your own codebase. Measure every change with the golden set from
+[Step 5](05-test-your-rag.md#take-home-measure-it) — `eval_retrieval.py` with the same environment variable.
+
 ## Exercise 2 — Chunk size
 
 ```bash
@@ -179,9 +185,9 @@ Look at the chunk boundaries with `CHUNKER=generic python3 index.py --show-chunk
 ## Exercise 4 — Another embedding model
 
 ```bash
-ollama pull qwen3-embedding
-EMBED_MODEL=qwen3-embedding python3 index.py ../generated_kotlin
-EMBED_MODEL=qwen3-embedding python3 search.py "How is the browser started?"
+ollama pull qwen3-embedding:0.6b    # the default tag is the 8B model, 4.7 GB
+EMBED_MODEL=qwen3-embedding:0.6b python3 index.py ../generated_kotlin
+EMBED_MODEL=qwen3-embedding:0.6b python3 search.py "How is the browser started?"
 python3 search.py "How is the browser started?"
 ```
 

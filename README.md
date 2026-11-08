@@ -25,7 +25,7 @@ agent — powered by a local LLM via [Ollama](https://ollama.com).
 | 3 | [Ask questions](docs/03-query.md) — search and answers in the terminal | ✅ |
 | 4 | [Connect it to goose](docs/04-connect-goose.md) — MCP extension, desktop & CLI | ✅ |
 | 5 | [Test your RAG](docs/05-test-your-rag.md) — can I trust the answer? Plus take-home eval scripts | ✅ |
-| 6 | [Exercises](docs/06-exercises.md) — let goose write a test, chunking & embedding experiments | ✅ |
+| 6 | [Exercises](docs/06-exercises.md) — let goose write a test; take-home: chunking & embedding experiments | ✅ |
 
 ## Before the workshop
 
