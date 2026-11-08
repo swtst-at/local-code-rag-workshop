@@ -20,6 +20,7 @@ agent — powered by a local LLM via [Ollama](https://ollama.com).
 
 | # | Step | Status |
 |---|------|--------|
+| 0 | [Preparation](docs/preparation.md) — before the workshop, at home | ✅ |
 | 1 | [Set up goose with a local LLM](docs/01-setup-goose-ollama.md) | ✅ |
 | 2 | [Index a codebase](docs/02-index-a-codebase.md) — chunking, embeddings, ChromaDB | ✅ |
 | 3 | [Ask questions](docs/03-query.md) — search and answers in the terminal | ✅ |
@@ -29,38 +30,9 @@ agent — powered by a local LLM via [Ollama](https://ollama.com).
 
 ## Before the workshop
 
-The models are several GB — **download them at home, not over conference Wi-Fi.**
-
-1. Work through [Step 1](docs/01-setup-goose-ollama.md) — goose, Ollama, `qwen3:8b`.
-2. Prepare the environment from [Step 2](docs/02-index-a-codebase.md):
-   ```bash
-   git clone https://github.com/swtst-at/local-code-rag-workshop.git
-   git clone https://github.com/secugrow/generated_kotlin.git   # or generated_java — pick one
-   cd local-code-rag-workshop
-   python3 -m venv .venv && source .venv/bin/activate
-   pip install -r requirements.txt
-   ollama pull nomic-embed-text
-   ```
-3. For the main exercise (Step 6): **JDK 23 or newer** and **Maven** — the demo projects target Java 23.
-   Download the Maven dependencies at home too:
-   ```bash
-   cd ../generated_kotlin && mvn -q test-compile && cd -
-   ```
-   Chrome is only needed to run the tests for real; the exercise can be checked without a browser.
-4. Run the setup check — everything should be green:
-   ```bash
-   python3 scripts/check_setup.py
-   ```
-
-### Hardware
-
-| Machine | Expectation |
-|---------|-------------|
-| GPU / Apple Silicon / iGPU with ≥ 16 GB shared RAM | Comfortable |
-| CPU only, 16 GB RAM | Works, but slow — use the smaller fallback model from Step 1 |
-| < 16 GB RAM | Not recommended |
-
-Linux (Ubuntu) is the reference platform; macOS works with the notes in Step 1.
+> [!IMPORTANT]
+> **Please prepare at home** — the models are several GB.
+> Everything you need is in **[Preparation](docs/preparation.md)** (about an hour, mostly downloads).
 
 ## Repository layout
 
@@ -81,7 +53,7 @@ mcp_server.py    MCP server — goose starts it as an extension
 eval_retrieval.py  retrieval eval: recall@k and MRR against a golden set
 eval_answers.py    answer eval: pass rate over several runs
 eval/            golden question sets
-scripts/         setup check, goose extension settings
+scripts/         setup check, goose extension settings, MCP test without goose
 exercises/       reference solutions for the exercises
 ```
 
