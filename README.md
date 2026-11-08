@@ -22,7 +22,7 @@ agent — powered by a local LLM via [Ollama](https://ollama.com).
 |---|------|--------|
 | 1 | [Set up goose with a local LLM](docs/01-setup-goose-ollama.md) | ✅ |
 | 2 | [Index a codebase](docs/02-index-a-codebase.md) — chunking, embeddings, ChromaDB | ✅ |
-| 3 | [Ask questions](docs/03-query.md) — terminal & chat UI | ✅ |
+| 3 | [Ask questions](docs/03-query.md) — search and answers in the terminal | ✅ |
 | 4 | [Connect it to goose](docs/04-connect-goose.md) — MCP extension, desktop & CLI | ✅ |
 | 5 | Test your RAG: golden questions & recall@k | 🚧 |
 | 6 | [Exercises](docs/06-exercises.md) — let goose write a test, chunking & embedding experiments | ✅ |
@@ -76,7 +76,6 @@ rag/             the RAG building blocks
 index.py         build / update the index
 search.py        retrieval only — which chunks match a question?
 ask.py           question → answer with sources, in the terminal
-app.py           chat UI (chainlit run app.py)
 mcp_server.py    MCP server — goose starts it as an extension
 scripts/         setup check, goose extension settings
 exercises/       reference solutions for the exercises

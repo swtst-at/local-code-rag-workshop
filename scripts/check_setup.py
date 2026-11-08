@@ -152,10 +152,11 @@ def check_python():
         return
 
     try:
-        import chainlit  # noqa: F401
-        ok(f"chainlit {chainlit.__version__}")
+        from importlib.metadata import version
+        import mcp  # noqa: F401
+        ok(f"mcp {version('mcp')}")
     except ImportError:
-        fail("chainlit not installed (chat UI, step 3)", "pip install -r requirements.txt")
+        fail("mcp not installed (MCP server for goose, step 4)", "pip install -r requirements.txt")
 
 
 # ── Java toolchain (only needed for exercise 1) ───────────────────────────────

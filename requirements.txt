@@ -1,6 +1,4 @@
 # Local vector database (embedded, no server)
 chromadb>=1.0,<2
-# Chat UI (step 3) — runs locally on http://localhost:8000
-chainlit>=2.0,<3
-# MCP server for goose (step 4) — also a dependency of chainlit, listed for clarity
+# MCP server for goose (step 4)
 mcp>=1.10,<2

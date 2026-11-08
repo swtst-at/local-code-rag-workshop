@@ -172,10 +172,10 @@ An answer we got from goose **without** answer rules in the server:
 > The provided code snippets do not explicitly mention a "login step." … it might be defined in another
 > step definition file (e.g., `LoginSteps.kt`) …
 
-The same two problems as with the `basic` prompt in Step 3.5 — jargon and an invented file name —
+The same two problems as with the `basic` prompt in Step 3.4 — jargon and an invented file name —
 although `ask.py` already uses the improved `strict` prompt. Why?
 
-| | `ask.py` / chat UI | goose |
+| | `ask.py` | goose |
 |---|---|---|
 | Who writes the system prompt? | **we** (`rag/answer.py`) | **goose** |
 | What do we control? | everything | only the text our MCP server returns |

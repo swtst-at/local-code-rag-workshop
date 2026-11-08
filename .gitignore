@@ -9,10 +9,6 @@ db/
 db_local/
 *.sqlite3
 
-# Chainlit
-.chainlit/
-.files/
-
 # Editors / OS
 .idea/
 .vscode/

@@ -1,4 +1,4 @@
-# Step 3 — Ask questions: terminal and chat UI
+# Step 3 — Ask questions
 
 Goal: get answers about the code — and understand where good and bad answers come from.
 
@@ -11,11 +11,9 @@ You will:
 
 1. Look at **retrieval alone** — no LLM
 2. Ask questions in the **terminal**
-3. Use the **chat UI**
-4. Learn the knobs that change answer quality
+3. Learn the knobs that change answer quality
 
-Prerequisites: Step 2 done, venv active (`source .venv/bin/activate`), `pip install -r requirements.txt` again
-(Step 3 adds Chainlit).
+Prerequisites: Step 2 done, venv active (`source .venv/bin/activate`).
 
 ---
 
@@ -72,7 +70,7 @@ Sources
 | `-k 3` | fewer chunks → shorter prompt, faster, but maybe missing context |
 | `--think` | let qwen3 reason before answering (≈ 3× slower) |
 | `--show-prompt` | print exactly what the LLM receives |
-| `--prompt basic` | the first version of the system prompt — compare (see 3.5) |
+| `--prompt basic` | the first version of the system prompt — compare (see 3.4) |
 | `--model qwen3:4b` | another Ollama model |
 
 Run `--show-prompt` once. There is no magic: a system prompt with rules, the retrieved chunks,
@@ -80,23 +78,7 @@ your question. That's all the model knows about your code.
 
 ---
 
-## 3.3 Chat UI
-
-```bash
-chainlit run app.py
-```
-
-Open <http://localhost:8000>.
-
-- **Search the code index** above each answer shows what was retrieved.
-- Click a source name (e.g. `WikipediaSteps.kt:7-22`) to see its code in the side panel.
-- **⚙ next to the input:** repository, number of chunks, thinking on/off.
-
-Chainlit runs locally; it creates `.chainlit/` and `.files/` in the project folder (ignored by git).
-
----
-
-## 3.4 What changes the answer?
+## 3.3 What changes the answer?
 
 | Knob | Effect | Try |
 |------|--------|-----|
@@ -122,7 +104,7 @@ The last one matters: a good RAG setup says *"not in the code"* instead of inven
 
 ---
 
-## 3.5 The system prompt matters
+## 3.4 The system prompt matters
 
 Ask the login question with both prompt versions:
 
@@ -173,7 +155,5 @@ Deciding "not there" is the LLM's job, and only the prompt tells it how.
 | Symptom | Fix |
 |---------|-----|
 | `No index for embedding model …` | run `python3 index.py <repo>` with the same `EMBED_MODEL` |
-| `chainlit: command not found` | `source .venv/bin/activate`, `pip install -r requirements.txt` |
 | First answer takes long | the model is loaded into memory first; later answers are faster |
 | Answer ignores the code / invents things | check `search.py` — is the right code retrieved? Try `--show-prompt` |
-| `address already in use` (Chainlit) | another instance is running — `chainlit run app.py --port 8001` |
