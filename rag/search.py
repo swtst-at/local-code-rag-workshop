@@ -67,6 +67,16 @@ def search(query: str, k: int = TOP_K, repo: str | None = None) -> list[Hit]:
     ]
 
 
+def list_files(repo: str) -> set[str]:
+    """File names (without directories) indexed for one repository."""
+    from .store import get_collection
+    try:
+        metas = get_collection(create=False).get(where={"repo": repo}, include=["metadatas"])["metadatas"]
+    except Exception:
+        return set()
+    return {m["path"].replace("\\", "/").rsplit("/", 1)[-1] for m in metas}
+
+
 def list_repos() -> list[str]:
     from .store import get_collection
     try:

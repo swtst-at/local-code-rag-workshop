@@ -1,0 +1,78 @@
+# Golden questions for secugrow/generated_kotlin
+#
+# expect: exact file names (or path endings like dir/File.kt) where the answer lives — a hit if ANY of them
+#         is among the retrieved chunks. Order does not matter.
+# mention:     optional — words a correct ANSWER must contain (default: the expected file and
+#              class names). Used by eval_answers.py.
+# expect: []  → a NEGATIVE question: the answer is not in the code.
+#               Retrieval cannot be scored for it; the answer eval checks that the model says so.
+#
+# Add your own questions — that is the point. Keep them specific enough that a person
+# could name the right file.
+
+repo: generated_kotlin
+
+questions:
+  - id: K01
+    question: Which step definition checks that the searchbar is visible?
+    expect: [WikipediaSteps.kt]
+
+  - id: K02
+    question: How is the WebDriver created for Firefox?
+    expect: [FirefoxWebDriverFactory.kt]
+
+  - id: K03
+    question: What happens after a scenario has finished?
+    expect: [Hooks.kt]
+
+  - id: K04
+    question: Where are screenshots taken when a scenario fails?
+    expect: [Hooks.kt]
+    mention: [Hooks, afterScenario]       # a correct answer may name the method instead of the file
+
+  - id: K05
+    question: How are accessibility issues checked?
+    expect: [A11yHelper.kt, Hooks.kt]
+
+  - id: K06
+    question: How does the device pool work for parallel Android tests?
+    expect: [DevicePool.kt]
+
+  - id: K07
+    question: How is the browser chosen from the system properties?
+    expect: [DriverContext.kt, DriverFactory.kt]
+
+  - id: K08
+    question: Which scenario uses two users at the same time?
+    expect: [wikipedia.feature]
+    mention: [WIK-02]                # what a correct answer names (default: the expected file names)
+
+  - id: K09
+    question: How are several browser sessions managed within one scenario?
+    expect: [WebDriverSessionStore.kt, SessionSteps.kt]
+
+  - id: K10
+    question: How is Chrome mobile emulation set up?
+    expect: [ChromeMobileEmulationWebDriverFactory.kt]
+
+  - id: K11
+    question: How do I run the tests against a remote Selenium Grid?
+    expect: [RemoteWebDriverFactory.kt, RemoteChromeWebDriverFactory.kt, RemoteFirefoxWebDriverFactory.kt]
+
+  # Vocabulary gap: these words do not appear in the code
+  - id: K12
+    question: How is the browser started before a test?
+    expect: [DriverFactory.kt, DriverContext.kt, WebDriverSession.kt, Hooks.kt]
+
+  # Negative questions — not in the code
+  - id: N01
+    question: What does the login step do?
+    expect: []
+
+  - id: N02
+    question: How are the passwords of the test users stored?
+    expect: []
+
+  - id: N03
+    question: How are REST API calls tested?
+    expect: []

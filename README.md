@@ -24,7 +24,7 @@ agent — powered by a local LLM via [Ollama](https://ollama.com).
 | 2 | [Index a codebase](docs/02-index-a-codebase.md) — chunking, embeddings, ChromaDB | ✅ |
 | 3 | [Ask questions](docs/03-query.md) — search and answers in the terminal | ✅ |
 | 4 | [Connect it to goose](docs/04-connect-goose.md) — MCP extension, desktop & CLI | ✅ |
-| 5 | Test your RAG: golden questions & recall@k | 🚧 |
+| 5 | [Test your RAG](docs/05-test-your-rag.md) — can I trust the answer? Plus take-home eval scripts | ✅ |
 | 6 | [Exercises](docs/06-exercises.md) — let goose write a test, chunking & embedding experiments | ✅ |
 
 ## Before the workshop
@@ -72,11 +72,15 @@ rag/             the RAG building blocks
   store.py       ChromaDB (local vector database)
   search.py      retrieval
   answer.py      prompt + answer generation
+  golden.py      golden question sets
   config.py      settings, overridable via environment variables
 index.py         build / update the index
 search.py        retrieval only — which chunks match a question?
 ask.py           question → answer with sources, in the terminal
 mcp_server.py    MCP server — goose starts it as an extension
+eval_retrieval.py  retrieval eval: recall@k and MRR against a golden set
+eval_answers.py    answer eval: pass rate over several runs
+eval/            golden question sets
 scripts/         setup check, goose extension settings
 exercises/       reference solutions for the exercises
 ```

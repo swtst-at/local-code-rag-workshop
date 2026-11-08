@@ -2,3 +2,5 @@
 chromadb>=1.0,<2
 # MCP server for goose (step 4)
 mcp>=1.10,<2
+# Golden question sets (step 5)
+pyyaml>=6

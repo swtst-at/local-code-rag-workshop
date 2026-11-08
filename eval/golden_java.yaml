@@ -1,0 +1,77 @@
+# Golden questions for secugrow/generated_java
+#
+# expect: exact file names (or path endings like dir/File.kt) where the answer lives — a hit if ANY of them
+#         is among the retrieved chunks. Order does not matter.
+# mention:     optional — words a correct ANSWER must contain (default: the expected file and
+#              class names). Used by eval_answers.py.
+# expect: []  → a NEGATIVE question: the answer is not in the code.
+#               Retrieval cannot be scored for it; the answer eval checks that the model says so.
+#
+# Add your own questions — that is the point. Keep them specific enough that a person
+# could name the right file.
+
+repo: generated_java
+
+questions:
+  - id: J01
+    question: Which step definition checks that the searchbar is visible?
+    expect: [WikipediaSteps.java]
+
+  - id: J02
+    question: How is the WebDriver created for Firefox?
+    expect: [FirefoxWebDriverFactory.java]
+
+  - id: J03
+    question: What happens after a scenario has finished?
+    expect: [Hooks.java]
+
+  - id: J04
+    question: Where are screenshots taken when a scenario fails?
+    expect: [Hooks.java]
+    mention: [Hooks, afterScenario]       # a correct answer may name the method instead of the file
+
+  - id: J05
+    question: How are accessibility issues checked?
+    expect: [A11yHelper.java, Hooks.java]
+
+  - id: J06
+    question: How is the browser chosen from the system properties?
+    expect: [DriverFactory.java, DriverType.java]
+
+  - id: J07
+    question: How is Chrome mobile emulation set up?
+    expect: [ChromeDriverMobileEmulationFactory.java, EmulatedDevices.java]
+
+  - id: J08
+    question: Which page object represents the Wikipedia search results?
+    expect: [WikiPediaSearchresultPage.java]
+
+  - id: J09
+    question: How do I run the tests against a remote Selenium Grid?
+    expect: [RemoteWebDriverFactory.java, RemoteChromeDriverFactory.java, RemoteFirefoxDriverFactory.java]
+
+  - id: J10
+    question: How is an Android device driven with Appium?
+    expect: [AppiumAndroidWebDriverFactory.java, AppiumDriverFactory.java]
+
+  - id: J11
+    question: How are several browser sessions managed within one scenario?
+    expect: [WebDriverSessionStore.java]
+
+  # Vocabulary gap: these words do not appear in the code
+  - id: J12
+    question: How is the browser started before a test?
+    expect: [DriverFactory.java, WebDriverSession.java, Hooks.java]
+
+  # Negative questions — not in the code
+  - id: N01
+    question: What does the login step do?
+    expect: []
+
+  - id: N02
+    question: How are the passwords of the test users stored?
+    expect: []
+
+  - id: N03
+    question: How are REST API calls tested?
+    expect: []
